@@ -67,6 +67,11 @@ public class MapperConfig {
 				if (!dto.getPhones().isEmpty()) {
 					phones = dto.getPhones().stream()
 							.map(e -> modelMapper().map(e, Phone.class))
+//							.map(p -> {
+//								Phone ph = p;
+//								ph.setUser(user);
+//								return ph;
+//							})
 							.collect(Collectors.toSet());
 				}
 				

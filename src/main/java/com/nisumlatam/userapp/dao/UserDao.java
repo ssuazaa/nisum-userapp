@@ -11,6 +11,8 @@ import com.nisumlatam.userapp.domain.model.User;
 public interface UserDao extends JpaRepository<User, String> {
 
 	List<User> findByEmailIgnoreCase(String email);
+	
+	List<User> findByEmailIgnoreCaseAndIdNot(String email, String id);
 
 	User findByEmailIgnoreCaseAndPassword(String email, String password);
 

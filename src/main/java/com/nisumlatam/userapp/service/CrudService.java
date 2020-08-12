@@ -1,4 +1,4 @@
-package com.nisumlatam.userapp.service.util;
+package com.nisumlatam.userapp.service;
 
 import java.util.List;
 import java.util.Optional;

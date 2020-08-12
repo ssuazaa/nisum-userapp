@@ -2,16 +2,12 @@ package com.nisumlatam.userapp.domain.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,7 +16,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Entity
+@Entity(name = "Phone")
 @Table(name = "phones")
 @Builder(toBuilder = true, setterPrefix = "with")
 @AllArgsConstructor
@@ -28,6 +24,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@DynamicUpdate
 public class Phone {
 
 	@Id
@@ -36,10 +33,10 @@ public class Phone {
 	@GenericGenerator(name = "system-uuid", strategy = "uuid")
 	private String id;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "user_id", nullable = false)
-	@JsonBackReference
-	private User user;
+//	@ManyToOne(cascade = CascadeType.ALL)
+//	@JoinColumn(name = "user_id", insertable = true, updatable = false)
+//	@JsonBackReference
+//	private User user;
 
 	@Column(name = "phone_number")
 	private String number;

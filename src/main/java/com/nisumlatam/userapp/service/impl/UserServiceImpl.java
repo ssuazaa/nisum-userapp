@@ -13,6 +13,7 @@ import com.nisumlatam.userapp.domain.model.User;
 import com.nisumlatam.userapp.service.UserService;
 import com.nisumlatam.userapp.web.exceptions.BussinesValidationException;
 import com.nisumlatam.userapp.web.exceptions.ObjectNotFoundException;
+import com.nisumlatam.userapp.web.util.UtilToken;
 
 @Service
 @Transactional
@@ -44,6 +45,7 @@ public class UserServiceImpl implements UserService {
 			.withCreated(LocalDateTime.now())
 			.withLastLogin(LocalDateTime.now())
 			.withIsactive(1)
+			.withToken(UtilToken.generateToken(entity.getEmail()))
 			.build();
 		
 		return userDao.save(entity);
@@ -51,13 +53,25 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void update(String id, User entity) {
-		if (!userDao.findByEmailIgnoreCase(entity.getEmail()).isEmpty())
+		if (!userDao.findByEmailIgnoreCaseAndIdNot(entity.getEmail(), id).isEmpty()) {
 			throw new BussinesValidationException(Constants.ERROR_VALIDATION_EXISTS_EMAIL);
+		}
+
+//		entity.setPhones(entity.getPhones()
+//			.stream()
+//			.map(p -> {
+//				Phone ph = p;
+//				ph.setUser(entity);
+//				return ph;
+//			}).collect(Collectors.toSet())
+//		);
+		
 		User entityDB = userDao.findById(id).orElseThrow(() -> new ObjectNotFoundException());
 		entityDB = entityDB.toBuilder()
 			.withId(id)
 			.withName(entity.getName())
 			.withEmail(entity.getEmail())
+			.withPhones(entity.getPhones())
 			.withPassword(entity.getPassword())
 			.withModified(LocalDateTime.now())
 			.withIsactive(entity.getIsactive())

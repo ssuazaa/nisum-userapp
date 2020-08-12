@@ -3,14 +3,16 @@ package com.nisumlatam.userapp.domain.model;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 
 import lombok.AllArgsConstructor;
@@ -20,7 +22,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Entity
+@Entity(name = "User")
 @Table(name = "users")
 @Builder(toBuilder = true, setterPrefix = "with")
 @AllArgsConstructor
@@ -28,6 +30,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@DynamicUpdate
 public class User {
 
 	@Id
@@ -45,7 +48,9 @@ public class User {
 	@Column(name = "user_password")
 	private String password;
 
-	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+	//@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "user_id")
 	private Set<Phone> phones;
 
 	@Column(name = "user_created")
