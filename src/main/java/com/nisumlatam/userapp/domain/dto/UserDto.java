@@ -26,12 +26,12 @@ public class UserDto implements Serializable {
 
 	private String name;
 
-	@Pattern(regexp = "^(.+)@(.+)cl$", message = "el email no cumple con el formato valido (aaaaaaa@dominio.cl).")
+	@Pattern(regexp = Constants.REGGEX_EMAIL, message = Constants.ERROR_BUSSINESS_VALIDATION_EMAIL)
 	private String email;
 
-	@Pattern(regexp = "^(?=(?:.*[0-9]){2,}).+$", message = "el password debe tener mínimo 2 números.")
-	@Pattern(regexp = "^(?=(?:.*[a-z]){1,}).+$", message = "el password debe tener mínimo 1 carácter en minúscula.")
-	@Pattern(regexp = "^(?=(?:.*[A-Z]){2,}).+$", message = "el password debe tener mínimo 2 caracteres en mayúscula.")
+	@Pattern(regexp = Constants.REGGEX_PASSWORD_NUMBERS, message = Constants.ERROR_BUSSINESS_VALIDATION_PASSWORD_NUMBERS)
+	@Pattern(regexp = Constants.REGGEX_PASSWORD_UPPER, message = Constants.ERROR_BUSSINESS_VALIDATION_PASSWORD_UPPER)
+	@Pattern(regexp = Constants.REGGEX_PASSWORD_LOWER, message = Constants.ERROR_BUSSINESS_VALIDATION_PASSWORD_LOWER)
 	private String password;
 
 	private Set<PhoneDto> phones;
