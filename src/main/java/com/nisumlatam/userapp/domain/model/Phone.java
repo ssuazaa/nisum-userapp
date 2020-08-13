@@ -1,13 +1,15 @@
 package com.nisumlatam.userapp.domain.model;
 
+import java.util.UUID;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.GenericGenerator;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,14 +31,8 @@ public class Phone {
 
 	@Id
 	@Column(name = "phone_id")
-	@GeneratedValue(generator = "system-uuid")
-	@GenericGenerator(name = "system-uuid", strategy = "uuid")
-	private String id;
-
-//	@ManyToOne(cascade = CascadeType.ALL)
-//	@JoinColumn(name = "user_id", insertable = true, updatable = false)
-//	@JsonBackReference
-//	private User user;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
 	@Column(name = "phone_number")
 	private String number;

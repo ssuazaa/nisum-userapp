@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
@@ -91,7 +90,7 @@ class UserControllerTest {
 	@Test
 	void testFindById() throws Exception {
 		// arrange
-		when(userService.findById(anyString())).thenReturn(Optional.of(UtilMocks.mockUser()));
+		when(userService.findById(any())).thenReturn(Optional.of(UtilMocks.mockUser()));
 		when(mapper.map(any(), any())).thenReturn(UtilMocks.mockUserDto());
 		
 		// act
@@ -110,7 +109,7 @@ class UserControllerTest {
 	@Test
 	void testFindByIdObjectNotFoundException() throws Exception {
 		// arrange
-		when(userService.findById(anyString())).thenThrow(new ObjectNotFoundException(Constants.ERROR_OBJECT_NOT_FOUND));
+		when(userService.findById(any())).thenThrow(new ObjectNotFoundException(Constants.ERROR_OBJECT_NOT_FOUND));
 		
 		// act
 		MvcResult result = mockMvc.perform(get(preffixApi + "/{id}", UUID.randomUUID())
@@ -143,7 +142,7 @@ class UserControllerTest {
 	            .andReturn();
 		
 		// arrange
-		when(userService.findById(anyString())).thenReturn(Optional.of(entity));
+		when(userService.findById(any())).thenReturn(Optional.of(entity));
 		when(mapper.map(any(), any())).thenReturn(dto);
 		
 		// act
@@ -200,7 +199,7 @@ class UserControllerTest {
 	@Test
 	void testUpdate() throws Exception {
 		// arrange
-		doNothing().when(userService).update(anyString(), any());
+		doNothing().when(userService).update(any(), any());
 		when(mapper.map(any(), any())).thenReturn(UtilMocks.mockUser());
 		
 		// act
@@ -217,7 +216,7 @@ class UserControllerTest {
 	@Test
 	void testUpdateBussinesValidationExceptionExistsEmail() throws Exception {
 		// arrange
-		doThrow(new BussinesValidationException(Constants.ERROR_VALIDATION_EXISTS_EMAIL)).when(userService).update(anyString(), any());
+		doThrow(new BussinesValidationException(Constants.ERROR_VALIDATION_EXISTS_EMAIL)).when(userService).update(any(), any());
 		
 		// act
 		MvcResult result = mockMvc.perform(put(preffixApi + "/{id}", UUID.randomUUID())
@@ -255,7 +254,7 @@ class UserControllerTest {
 	@Test
 	void testDelete() throws Exception {
 		// arrange
-		doNothing().when(userService).deleteById(anyString());
+		doNothing().when(userService).deleteById(any());
 		
 		// act
 		MvcResult result = mockMvc.perform(delete(preffixApi + "/{id}", UUID.randomUUID())

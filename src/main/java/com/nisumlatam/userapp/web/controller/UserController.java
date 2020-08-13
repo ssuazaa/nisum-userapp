@@ -2,6 +2,7 @@ package com.nisumlatam.userapp.web.controller;
 
 import java.net.URI;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -48,7 +49,7 @@ public class UserController {
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<UserDto> findById(@PathVariable String id) {
+	public ResponseEntity<UserDto> findById(@PathVariable UUID id) {
 		User entity = userService.findById(id).get();
 		return new ResponseEntity<UserDto>(mapper.map(entity, UserDto.class), HttpStatus.OK);
 	}
@@ -67,7 +68,7 @@ public class UserController {
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Void> update(@PathVariable String id, @Valid @RequestBody UserDto dto, Errors errors) {
+	public ResponseEntity<Void> update(@PathVariable UUID id, @Valid @RequestBody UserDto dto, Errors errors) {
 		if (errors.hasErrors())
 			throw new BussinesValidationException(errors);
 		userService.update(id, mapper.map(dto, User.class));
@@ -75,7 +76,7 @@ public class UserController {
 	}
 
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Void> delete(@PathVariable String id) {
+	public ResponseEntity<Void> delete(@PathVariable UUID id) {
 		userService.deleteById(id);
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}

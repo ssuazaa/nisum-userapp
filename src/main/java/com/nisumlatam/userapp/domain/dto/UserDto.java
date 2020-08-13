@@ -3,6 +3,7 @@ package com.nisumlatam.userapp.domain.dto;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.validation.constraints.Pattern;
 
@@ -22,7 +23,7 @@ public class UserDto implements Serializable {
 	 */
 	private static final long serialVersionUID = -2769494367096119626L;
 
-	private String id;
+	private UUID id;
 
 	private String name;
 

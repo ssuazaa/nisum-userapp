@@ -1,6 +1,7 @@
 package com.nisumlatam.userapp.domain.dto;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,7 +19,7 @@ public class PhoneDto implements Serializable {
 	 */
 	private static final long serialVersionUID = 2170741649726804846L;
 
-	private String id;
+	private UUID id;
 
 	private String number;
 

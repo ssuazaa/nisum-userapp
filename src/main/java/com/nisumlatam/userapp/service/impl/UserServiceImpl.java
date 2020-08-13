@@ -3,6 +3,7 @@ package com.nisumlatam.userapp.service.impl;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +28,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Optional<User> findById(String id) {
+	public Optional<User> findById(UUID id) {
 		return Optional.of(userDao.findById(id).orElseThrow(() -> new ObjectNotFoundException()));
 	}
 
@@ -47,16 +48,13 @@ public class UserServiceImpl implements UserService {
 			.withIsactive(1)
 			.withToken(UtilToken.generateToken(entity.getEmail()))
 			.build();
-		
 		return userDao.save(entity);
 	}
 
 	@Override
-	public void update(String id, User entity) {
-		if (!userDao.findByEmailIgnoreCaseAndIdNot(entity.getEmail(), id).isEmpty()) {
+	public void update(UUID id, User entity) {
+		if (!userDao.findByEmailIgnoreCaseAndIdNot(entity.getEmail(), id).isEmpty()) 
 			throw new BussinesValidationException(Constants.ERROR_VALIDATION_EXISTS_EMAIL);
-		}
-		
 		User entityDB = userDao.findById(id).orElseThrow(() -> new ObjectNotFoundException());
 		entityDB = entityDB.toBuilder()
 			.withId(id)
@@ -67,7 +65,6 @@ public class UserServiceImpl implements UserService {
 			.withModified(LocalDateTime.now())
 			.withIsactive(entity.getIsactive())
 			.build();
-		
 		userDao.save(entityDB);
 	}
 	
@@ -77,7 +74,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void deleteById(String id) {
+	public void deleteById(UUID id) {
 		User entity = userDao.findById(id).orElseThrow(() -> new ObjectNotFoundException());
 		userDao.delete(entity);
 	}

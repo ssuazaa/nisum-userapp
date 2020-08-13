@@ -10,7 +10,7 @@ public class UtilMocks {
 
 	public static User mockUser() {
 		return User.builder()
-				.withId(String.valueOf(UUID.randomUUID()))
+				.withId(UUID.randomUUID())
 				.withEmail("ssuazaa@domain.cl")
 				.withPassword("SuSo08")
 				.withName("Juan Sebastian")
@@ -19,7 +19,7 @@ public class UtilMocks {
 	
 	public static UserDto mockUserDto() {
 		return UserDto.builder()
-				.withId(String.valueOf(UUID.randomUUID()))
+				.withId(UUID.randomUUID())
 				.withEmail("ssuazaa@domain.cl")
 				.withPassword("SuSo08")
 				.withName("Juan Sebastian")

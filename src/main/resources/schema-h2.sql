@@ -2,11 +2,11 @@
 DROP TABLE IF EXISTS phones CASCADE;
 
 CREATE TABLE phones (
-	phone_id 			VARCHAR(255) NOT NULL, 
+	phone_id 			UUID NOT NULL, 
 	phone_city_code 	VARCHAR(255), 
 	phone_country_code 	VARCHAR(255), 
 	phone_number 		VARCHAR(255), 
-	user_id 			VARCHAR(255), 
+	user_id 			UUID, 
 	PRIMARY KEY (phone_id)
 );
 
@@ -14,7 +14,7 @@ CREATE TABLE phones (
 DROP TABLE IF EXISTS users CASCADE;
 
 CREATE TABLE users (
-	user_id 		VARCHAR(255) NOT NULL, 
+	user_id 		UUID NOT NULL, 
 	user_created 	TIMESTAMP, 
 	user_email 		VARCHAR(255), 
 	user_isactive 	INTEGER, 
