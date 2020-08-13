@@ -56,15 +56,6 @@ public class UserServiceImpl implements UserService {
 		if (!userDao.findByEmailIgnoreCaseAndIdNot(entity.getEmail(), id).isEmpty()) {
 			throw new BussinesValidationException(Constants.ERROR_VALIDATION_EXISTS_EMAIL);
 		}
-
-//		entity.setPhones(entity.getPhones()
-//			.stream()
-//			.map(p -> {
-//				Phone ph = p;
-//				ph.setUser(entity);
-//				return ph;
-//			}).collect(Collectors.toSet())
-//		);
 		
 		User entityDB = userDao.findById(id).orElseThrow(() -> new ObjectNotFoundException());
 		entityDB = entityDB.toBuilder()
